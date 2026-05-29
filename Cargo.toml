@@ -8,3 +8,11 @@ crate-type = ["cdylib"]
 
 [dependencies]
 # Nenhuma dependência externa necessária para a lógica básica de I/O
+
+[profile.githubci]
+inherits = "release"
+strip = true
+lto = true
+codegen-units = 1
+debug = false
+panic = "abort"
