@@ -95,9 +95,10 @@ impl FileLoader {
                     return None;
                 };
                 log::info!("Loaded ResourcePack file: {}", cpppath.as_ref());
-                let buffer = BufferCursor::Cxx(Cursor::new(stack_str));
+                let mut data = stack_str.as_ref().to_vec();
+                patch_arm_shaders(&mut data);
+                let buffer = BufferCursor::Vec(Cursor::new(data));
                 let cache = Buffer::new(path.to_path_buf(), buffer);
-                // ResourceLocation gets dropped (also cxx_storage if its not needed)
                 return Some(cache);
             }
         }
