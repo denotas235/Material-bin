@@ -178,3 +178,13 @@ fn patch_arm_shaders(content: &mut Vec<u8>) {
         content.splice(tag.len()..tag.len(), headers.iter().cloned());
     }
 }
+
+pub fn aplicar_patch_sonoro(bytes: &[u8]) -> Vec<u8> {
+    let tag = b"//TAG: FAST_PATH_MALI";
+    let mut novo_conteudo = bytes.to_vec();
+    if novo_conteudo.starts_with(tag) {
+        let headers = b"\n#extension GL_ARM_shader_framebuffer_fetch : require\n#extension GL_EXT_shader_pixel_local_storage : require\n#extension GL_ARM_increased_rt : enable\n";
+        novo_conteudo.splice(tag.len()..tag.len(), headers.iter().cloned());
+    }
+    novo_conteudo
+}
