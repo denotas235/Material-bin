@@ -16,3 +16,6 @@ lto = true
 codegen-units = 1
 debug = false
 panic = "abort"
+
+[build-dependencies]
+cc = "1.1.24"
