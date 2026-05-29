@@ -1,38 +1,23 @@
-name: Ci-Build
+name: Build EngenhariaSonora Loader
 
 on:
   push:
+    branches: [ main ]
 
 jobs:
   build:
-    strategy:
-      matrix:
-        target: 
-          - aarch64-linux-android
-          - x86_64-linux-android
-          - armv7-linux-androideabi
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Rust
-        run: rustup update stable
-      - name: Setup Cache
-        uses: Swatinem/rust-cache@v2  
-      - name: Get version
-        id: get-version
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          target: aarch64-linux-android
+      - name: Build with Cargo
         run: |
-          echo "version=$(rustc --version)" >> $GITHUB_OUTPUT
-        shell: bash
-      - name: Install cargo ndk
-        run: cargo install cargo-ndk
-        shell: bash  
-      - name: Install target
-        run: rustup target add ${{matrix.target}}
-      - name: build
-        run: cargo ndk -t ${{matrix.target}} build --profile githubci 
-      - name: Upload artifacts
+          cargo build --release --target aarch64-linux-android
+      - name: Upload Binary
         uses: actions/upload-artifact@v4
         with:
-          name: mtbinloader2-${{ matrix.target }}
-          path: target/${{ matrix.target }}/githubci/libmtbinloader2.so
-
+          name: mtbinloader2-optimized
+          path: target/aarch64-linux-android/release/libmtbinloader2.so
