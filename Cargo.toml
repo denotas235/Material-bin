@@ -1,44 +1,10 @@
 [package]
 name = "mtbinloader2"
-version = "0.1.12"
+version = "0.1.0"
 edition = "2021"
-
-[dependencies]
-android_logger = { version = "0.15.0", default-features = false }
-atoi = "2.0.0"
-bhook = { version = "0.1.2", git = "https://github.com/mcbegamerxx954/bhook" }
-bstr = "1.12.0"
-ctor = "0.4.1"
-cxx = "1.0.128"
-jni = "0.21.1"
-libc = "0.2.159"
-log = "0.4.22"
-memchr = "2.7.5"
-ndk-sys = "0.6.0"
-once_cell = "1.20.2"
-page_size = "0.6.0"
-plt-rs = "0.4.0"
-region = "3.0.2"
-scroll = "0.13.0"
-tinypatscan = { git = "https://github.com/mcbegamerxx954/tinypatscan", version = "0.1.1" }
-
-[profile.release]
-# This lib gets called from nowhere and so unwinding = crash
-panic = "abort"
-
-[profile.githubci]
-inherits = "release"
-strip = true
-lto = true 
-codegen-units = 1 
-debug = false
-panic = "abort"
 
 [lib]
 crate-type = ["cdylib"]
 
-[build-dependencies]
-cc = "1.1.24"
-[lints.clippy]
-indexing_slicing = "deny"
-unwrap_used = "deny"
+[dependencies]
+# Nenhuma dependência externa necessária para a lógica básica de I/O
